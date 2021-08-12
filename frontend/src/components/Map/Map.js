@@ -4,19 +4,58 @@ import { Paper, Typography, useMediaQuery } from "@material-ui/core";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import Rating from "@material-ui/lab/Rating";
 import useStyles from "./styles";
-import Room from "@material-ui/icons/Room";
+import { Box } from "@material-ui/core"
+// import Room from "@material-ui/icons/Room";
+// import Popover from '@material-ui/core/Popover';
+// import Axios from 'axios'
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
+// const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
-const Map = ({ coordinates, setCoordinates, setBounds, places }) => {
+const Map = ({ coordinates, setCoordinates, setBounds, places, setChildClicked, weatherData, weatherCheckBox }) => {
   const classes = useStyles();
-  const isDesktop = useMediaQuery("(min-width:600px)");
+  const isDesktop = useMediaQuery('(min-width:640px)');
+  // const [anchorEl, setAnchorEl] = useState(null);
+  // const [uploadImage, setUploadImage] = useState("");
+  // const [displayImage, setDisplayImage] = useState(
+  //   "https://i.ibb.co/t8dfPCM/pawprint.png"
+  // );
+ 
+  // const upload = () => {
+  //   const formData = new FormData();
+  //   formData.append("file", uploadImage);
+  //   formData.append("upload_preset", "dog_tinder_users");
+    
 
+
+  //   Axios.post(
+  //     "https://api.cloudinary.com/v1_1/dsag331qk/image/upload",
+  //     formData
+  //   ).then((response) => {
+  //     setDisplayImage(response.data.secure_url);
+  //   });
+  // };
+
+  // const handleClick = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
+
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
+
+  // const open = Boolean(anchorEl);
+  // const id = open ? 'simple-popover' : undefined;
+
+  const handleApiLoaded = (map, maps) => {
+    // use map and maps objects
+  };
+  
   return (
     <div className={classes.mapContainer}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
-        defaultCenter={coordinates}
+        // defaultCenter={coordinates}
+        defaultCenter={{lat:1.420181,lng:103.864555}}
         center={coordinates}
         defaultZoom={14}
         margin={[50, 50, 50, 50]}
@@ -26,63 +65,94 @@ const Map = ({ coordinates, setCoordinates, setBounds, places }) => {
           setCoordinates({ lat: e.center.lat, lng: e.center.lng });
           setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
         }}
-        // onChildClick={''}
+        onChildClick={(child) => {setChildClicked(child)}}
+        yesIWantToUseGoogleMapApiInternals = {true}
+        onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
+        $hover={"false"}
       >
-        {console.log("places",places)}
-      
-     
-        {places?.length && places?.map((place, i) => (
-            //   {console.log(Number(place.latitude))}
-            //   {console.log(Number(place.longitude))}
-          <div
-            // className={classes.markerContainer}
+
+    {!weatherCheckBox && places?.map((place, i) => (
+          <Box
+            className={classes.markerContainer}
             lat={Number(place.latitude)}
             lng={Number(place.longitude)}
-   
             key={i}
           >
-            {!isDesktop ? (
-              <LocationOnOutlinedIcon color="primary" fontSize="large" />
-            ) : (
-              <Paper elevation={3} className={classes.paper}>
-                <Typography
+            {
+              !isDesktop ? (
+                <LocationOnOutlinedIcon color="primary" fontSize="large" />
+              ) : (
+                <Paper elevation={3} className={classes.paper}>
+                  <Typography
                   className={classes.typography}
                   variant="subtitle2"
                   gutterBottom
-                >
-                  {place.name}
-                </Typography>
-                <img
-                  className={classes.pointer}
-                  src={
-                    place.photo
+                  >
+                    {place.name}
+                  </Typography>
+                  <img
+                    className={classes.pointer}
+                    src={place.photo
                       ? place.photo.images.large.url
                       : "https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg"
-                  }
-                />
+                    }
+                    alt={place.name}  
+                  />
                 <Rating
                   name="read-only"
                   size="small"
                   value={Number(place.rating)}
                   readOnly
                 />
-              </Paper>
-            )}
-          </div>
+                </Paper>
+              )
+            } 
+          </Box>
         ))}
-
-        {/* <AnyReactComponent
-            lat={35.689487}
-            lng={139.691706}
-            text="My Marker"
-          /> */}
+    
+        {weatherData?.list?.map((data,i)=>(
+            <Box key={i} lat={data.coord.lat} lng={data.coord.lon}>
+                <img src={`http://openweathermap.org/img/w/${data.weather[0].icon}.png`} alt="weather" height="100px" />
+            </Box>
+        ))}
+   
         {/* <Room  lat={1.420181}
-            lng={103.864555}/> */}
-        {/* <div lat={35.689487}
-            lng={139.691706}
-           >
-                "MARK HERE"
-        </div> */}
+            lng={103.864555}
+            onClick={handleClick}/> */}
+       {/* <Popover
+        lat={1.420181}
+        lng={103.864555}
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+      > */}
+        {/* <Typography className={classes.typography}>The content of the Popover.</Typography> */}
+        {/* <div className="image-uploader">     
+              <input
+                  name="image"
+                  type="file"
+                  onChange={(e) => {
+                    console.log({e})
+                    setUploadImage(e.target.files[0]);
+                  }}
+                  accept=".jpg,.jpeg,.gif,.png"
+                />
+              </div>
+              <div className="image-uploader">
+                <button onClick={upload} class="upload-image-btn">
+                  Upload Image
+                </button>
+              </div>
+        </Popover> */}
       </GoogleMapReact>
     </div>
   );
