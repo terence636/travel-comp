@@ -12,29 +12,33 @@ import useStyles from './styles'
 import PlaceDetails from '../PlaceDetails/PlaceDetails'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import Chat from '../Chat/Chat'
+import Join from '../Chat/Join'
 
-const List = ({places, childClicked, isLoading, type, rating, setType, setRating, setWeatherCheckBox, weatherCheckBox}) => {
+const List = ({places, childClicked, isLoading, type, rating, setType, setRating, setWeatherCheckBox, weatherCheckBox, room}) => {
     const classes = useStyles();
     const [elRefs, setElRefs] = useState([]);
+    const [chatBox, setChatBox] = useState(false);
+    const [nickname, setNickname] = useState('');
     
-    // const onClickWeatherCheckBox = (event) => {
-    //     // console.log("weatherbox", event.target.checked)
-    //     setWeatherCheckBox(event.target.checked);
-    //   };
 
     // console.log({ childClicked })
   
    useEffect(()=> {
     const refs = Array(places?.length).fill().map((_,i)=> elRefs[i] || createRef());
-    console.log({refs})
+    // console.log({refs})
     setElRefs(refs);
    }, [places])
 
-   const handleSetType = (e) => {
-    console.log("List.js", {e})
-    console.log("List.js",e.target.value)
-    setType(e.target.value)
-   }
+  //  const handleSetType = (e) => {
+  //   // console.log("List.js", {e})
+  //   // console.log("List.js",e.target.value)
+  //   setType(e.target.value)
+  //  }
+  const handleChatBox = (e) => {
+    setChatBox(e.target.checked)
+    setNickname('')
+  }
 
   return (
     <div className={classes.container}>
@@ -49,24 +53,24 @@ const List = ({places, childClicked, isLoading, type, rating, setType, setRating
             <>
         <FormControl className={classes.formControl}>
             <InputLabel>Type</InputLabel>
-            {/* <Select value={type} onChange={(e)=>setType(e.target.value)}> */}
-            <Select value={type} onChange={(e)=>handleSetType(e)}>
+            <Select value={type} onChange={(e)=>setType(e.target.value)}>
+            {/* <Select value={type} onChange={(e)=>handleSetType(e)}> */}
                 <MenuItem value="restaurants">Restaurants</MenuItem>
                 <MenuItem value="hotels">Hotels</MenuItem>
                 <MenuItem value="attractions">Attractions</MenuItem>
-                <MenuItem value="weather">Weather</MenuItem>
+                {/* <MenuItem value="weather">Weather</MenuItem> */}
             </Select>
         </FormControl>
-        {<FormControl className={classes.formControl}>
+        {<FormControl className={classes.formControlRating}>
             <InputLabel>Rating</InputLabel>
             <Select value={rating} onChange={(e)=>setRating(e.target.value)}>
                 <MenuItem value={0}>All</MenuItem>
-                <MenuItem value={3}>Above 3.0</MenuItem>
-                <MenuItem value={4.0}>Above 4.0</MenuItem>
-                <MenuItem value={4.5}>Above 4.5</MenuItem>
+                <MenuItem value={3}>&gt;3.0</MenuItem>
+                <MenuItem value={4.0}>&gt;4.0</MenuItem>
+                {/* <MenuItem value={4.5}>Above 4.5</MenuItem> */}
             </Select>
         </FormControl> }
-        <FormControlLabel
+        <FormControlLabel className={classes.formControlLabel}
         control={
           <Checkbox
             checked={weatherCheckBox}
@@ -77,7 +81,25 @@ const List = ({places, childClicked, isLoading, type, rating, setType, setRating
         }
         label="Weather Only"
       />
+       <FormControlLabel className={classes.formControlLabel}
+        control={
+          <Checkbox
+            checked={chatBox}
+            // onChange={(e)=>setChatBox(e.target.checked)}
+            onChange={(e)=>handleChatBox(e)}
+            name="check"
+            color="primary"
+          />
+        }
+        label="Chat"
+      />
+      {chatBox && nickname && <Chat nickname={nickname} room={room}/>}
+      {chatBox && !nickname && <Join setNickname={setNickname} /> }
+      {/* {chatBox && nickname && <Chat nickname={nickname} room={room}/>} */}
+      {!chatBox && 
         <Grid container spacing={3} className={classes.list}>
+        
+        
             {places?.map((place,i)=>(
                 <Grid ref={elRefs[i]} item key={i} xs={12}>
                     <PlaceDetails 
@@ -87,7 +109,10 @@ const List = ({places, childClicked, isLoading, type, rating, setType, setRating
                     />
                 </Grid>
             ))}
+        
+           
         </Grid>
+         }
         </>
         )}
     </div>

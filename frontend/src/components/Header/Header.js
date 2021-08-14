@@ -5,15 +5,20 @@ import SearchIcon from '@material-ui/icons/Search'
 import useStyles from './styles'
 
 
-const Header = ({ setCoordinates }) => {
+const Header = ({ setCoordinates, setRoom }) => {
     const classes = useStyles()
     const [autocomplete, setAutocomplete] = useState(null)
 
     const onLoad = (autoC) => setAutocomplete(autoC)
     const onPlaceChanged = () => {
-        const lat = autocomplete.getPlace().geometry.location.lat();
-        const lng = autocomplete.getPlace().geometry.location.lng();
-        setCoordinates({ lat,lng })
+        const lat = autocomplete.getPlace().geometry?.location?.lat();
+        const lng = autocomplete.getPlace().geometry?.location?.lng();
+        // console.log(autocomplete.getPlace())
+        console.log(autocomplete.getPlace()?.name)
+        if(lat && lng) {
+            setCoordinates({ lat,lng })
+            setRoom(autocomplete.getPlace()?.name)
+        }
     }
 
     return (

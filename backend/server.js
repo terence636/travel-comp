@@ -1,11 +1,25 @@
 const express = require("express");
-const path = require('path');
+const path = require("path");
 const app = express();
+const http = require("http");
 const mongoose = require("mongoose");
 // const session = require("express-session");
 const methodOverride = require("method-override");
 const cors = require("cors");
+const httpServer = http.createServer(app);
+// const { Server } = require("socket.io");
+// const io = new Server(httpServer);
 
+const io = require("socket.io")(httpServer, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["my-custom-header"],
+    credentials: true
+  }
+});
+
+const { addUser, removeUser, getUser, getUsersInRoom } = require('./chat.users')
 require("dotenv").config();
 
 //middleware
@@ -28,20 +42,51 @@ app.use("/pin", pinRoutes);
 const usersRoutes = require("./routes/users.js");
 app.use("/user", usersRoutes);
 
+// app.get("/", (req, res) => {
+//   res.send("Hello World");
+// });
+
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.sendFile(__dirname + "/index.html");
 });
 
-app.listen(process.env.PORT, () => {
+io.on("connection", (socket) => {
+  console.log("A user connected");
+  socket.on("disconnect", () => {
+    console.log("User had left!!");
+  });
+  socket.on("sendMessage", (msg,callback) => {
+    console.log(msg)
+    const user = getUser(socket.id)
+    io.to(user.room).emit('message',{ user: user.nickname, text: msg})
+    callback()
+  });
+  socket.on("join",({nickname, room } , callback)=>{
+    // console.log(socket.id)
+    const { error, user } = addUser({id:socket.id, nickname, room})
+    if(error) return callback(error)
+    console.log(`${nickname} has join the chat`)
+    socket.emit('message', { user: 'admin', text: `${user.nickname}, welcome to the room ${user.room}`})
+    socket.broadcast.to(user.room).emit('message', {user: 'admin', text: `${user.name}, has joined!`})
+    socket.join(user.room)
+    callback()
+  })
+});
+
+httpServer.listen(process.env.PORT, () => {
   console.log("Backend Server Listening on the port", process.env.PORT);
-}); 
+});
+
+// httpServer.listen(3000, () => {
+//   console.log('listening on *:3000');
+// });
 
 mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
-  });
-  mongoose.connection.once("open", () => {
-    console.log("connected to mongo atlas");
-  });
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true,
+});
+mongoose.connection.once("open", () => {
+  console.log("connected to mongo atlas");
+});

@@ -33,6 +33,7 @@ const App = () => {
   const [type, setType] = useState("restaurants");
   const [rating, setRating] = useState(0);
   const [weatherCheckBox, setWeatherCheckBox] = useState(false)
+  const [room, setRoom] = useState('Singapore')
 
   // TO GET THE CURRENT GPS POSITION WHEN LOADING FIRST TIME
   // SUBSEQUENT CHANGES ARE BY setCoord and setBounds when
@@ -83,8 +84,8 @@ const App = () => {
   return (
     <>
       <CssBaseline>
-        <Header setCoordinates={setCoordinates} />
-        <Grid container spacing={2} style={{ width: "100%" }}>
+        <Header setCoordinates={setCoordinates} setRoom={setRoom} />
+        <Grid container spacing={1} style={{ width: "100%" }}>
           <Grid item xs={12} md={4}>
             <div className={classes.grid1}>
               <List
@@ -97,6 +98,7 @@ const App = () => {
                 setRating={setRating}
                 weatherCheckBox={weatherCheckBox}
                 setWeatherCheckBox={setWeatherCheckBox}
+                room={room}
               />
             </div>
           </Grid>
