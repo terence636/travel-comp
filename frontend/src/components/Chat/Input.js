@@ -1,20 +1,31 @@
-import React from "react";
+import React, { useRef } from "react";
 import "./chat.css";
 
-const Input = ({setMsg, msg, sendMessage}) => (
-  <from className="form">
+const Input = ({setMsg, msg, sendMessage}) => {
+  const inputRef = useRef()
+
+  const handleSend = (event) => {
+    sendMessage(event,inputRef.current.value)
+    inputRef.current.value = ''
+  }
+
+  return (
+  <form className="form">
     <input
       className="input"
       type="text"
       placeholder="Type a message"
-      value={msg}
-      onChange={(event) => setMsg(event.target.value)}
+      ref={inputRef}
+      // value={msg}
+      // onChange={(event) => setMsg(event.target.value)}
       onKeyPress={(event) =>
-        event.key === "Enter" ? sendMessage(event) : null
+        event.key === "Enter" ? handleSend(event) : null
       }
     />
-    <buttton></buttton>
-  </from>
-);
+  <button className="sendButton" onClick={(event)=>handleSend(event)}>Send</button>
+  </form>
+  )
+   
+};
 
 export default Input;

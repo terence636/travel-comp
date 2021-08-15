@@ -8,8 +8,8 @@ const userSchema = new mongoose.Schema({
       lat : { type: Number },
       lng : { type: Number }
   },
-  invisible : { type: Boolean, default: false },
-  connected : { type: Boolean, default: false }
+  // invisible : { type: Boolean, default: false },
+  // connected : { type: Boolean, default: false }
 
 },{ timestamps:true });
 

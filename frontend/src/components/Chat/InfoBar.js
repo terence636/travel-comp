@@ -12,7 +12,7 @@ const InfoBar = ({ nickname, room }) => {
         {/* <a href="/">
           <img src="#" alt="close image" />
         </a> */}
-        <h4>{nickname}</h4>
+        <h4>{nickname.toUpperCase()}</h4>
       </div>
     </div>
   );

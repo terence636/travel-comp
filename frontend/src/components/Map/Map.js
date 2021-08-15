@@ -14,41 +14,9 @@ import { Box } from "@material-ui/core"
 const Map = ({ coordinates, setCoordinates, setBounds, places, setChildClicked, weatherData, weatherCheckBox }) => {
   const classes = useStyles();
   const isDesktop = useMediaQuery('(min-width:640px)');
-  // const [anchorEl, setAnchorEl] = useState(null);
-  // const [uploadImage, setUploadImage] = useState("");
-  // const [displayImage, setDisplayImage] = useState(
-  //   "https://i.ibb.co/t8dfPCM/pawprint.png"
-  // );
- 
-  // const upload = () => {
-  //   const formData = new FormData();
-  //   formData.append("file", uploadImage);
-  //   formData.append("upload_preset", "dog_tinder_users");
-    
-
-
-  //   Axios.post(
-  //     "https://api.cloudinary.com/v1_1/dsag331qk/image/upload",
-  //     formData
-  //   ).then((response) => {
-  //     setDisplayImage(response.data.secure_url);
-  //   });
+  // const handleApiLoaded = (map, maps) => {
+  //   // use map and maps objects
   // };
-
-  // const handleClick = (event) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-
-  // const handleClose = () => {
-  //   setAnchorEl(null);
-  // };
-
-  // const open = Boolean(anchorEl);
-  // const id = open ? 'simple-popover' : undefined;
-
-  const handleApiLoaded = (map, maps) => {
-    // use map and maps objects
-  };
   
   return (
     <div className={classes.mapContainer}>
@@ -66,9 +34,9 @@ const Map = ({ coordinates, setCoordinates, setBounds, places, setChildClicked, 
           setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
         }}
         onChildClick={(child) => {setChildClicked(child)}}
-        yesIWantToUseGoogleMapApiInternals = {true}
-        onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
-        $hover={"false"}
+        // yesIWantToUseGoogleMapApiInternals = {true}
+        // onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
+        // $hover={"false"}
       >
 
     {!weatherCheckBox && places?.map((place, i) => (

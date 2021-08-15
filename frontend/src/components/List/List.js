@@ -22,12 +22,14 @@ const List = ({places, childClicked, isLoading, type, rating, setType, setRating
     const [nickname, setNickname] = useState('');
     
 
-    // console.log({ childClicked })
+    console.log({ childClicked })
   
    useEffect(()=> {
     const refs = Array(places?.length).fill().map((_,i)=> elRefs[i] || createRef());
     // console.log({refs})
     setElRefs(refs);
+    setChatBox(false)
+    setNickname('')
    }, [places])
 
   //  const handleSetType = (e) => {
@@ -95,11 +97,7 @@ const List = ({places, childClicked, isLoading, type, rating, setType, setRating
       />
       {chatBox && nickname && <Chat nickname={nickname} room={room}/>}
       {chatBox && !nickname && <Join setNickname={setNickname} /> }
-      {/* {chatBox && nickname && <Chat nickname={nickname} room={room}/>} */}
-      {!chatBox && 
-        <Grid container spacing={3} className={classes.list}>
-        
-        
+      {!chatBox && <Grid container spacing={3} className={classes.list}>
             {places?.map((place,i)=>(
                 <Grid ref={elRefs[i]} item key={i} xs={12}>
                     <PlaceDetails 
@@ -109,8 +107,6 @@ const List = ({places, childClicked, isLoading, type, rating, setType, setRating
                     />
                 </Grid>
             ))}
-        
-           
         </Grid>
          }
         </>
