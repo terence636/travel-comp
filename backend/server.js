@@ -51,29 +51,33 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
+
   console.log(`${socket.id} A user is connected`)
   socket.on("disconnectUser", () => {
     // const user = getUser(socket.id)
     console.log(`${socket.id} had left!!`);
-    removeUser(socket.id)
+    const user = removeUser(socket.id)
+    io.to(user.room).emit('message',{ user: 'ADMIN', text: `${user.nickname.toUpperCase()} has left`})
   });
+
   socket.on("sendMessage", (msg,callback) => {
     console.log(msg)
     const user = getUser(socket.id)
-    console.log(getUsersInRoom(user.room))
-    io.to(user.room).emit('message',{ user: user.nickname, text: msg})
+    console.log("allusers",getUsersInRoom(user.room))
+    io.to(user.room).emit('message',{ user: user.nickname, text: msg, colour: user.colour})
     callback()
   });
+
   socket.on("join",({nickname, room } , callback)=>{
     // console.log(socket.id)
     const { error, user } = addUser({id:socket.id, nickname, room})
     console.log({error})
     console.log({user})
-    console.log(getUsersInRoom(user.room))
+    console.log("Allusers",getUsersInRoom(user.room))
     // if(error) return callback(error)
     console.log(`${user.nickname} has join the chat`)
-    socket.emit('message', { user: 'admin', text: `${user.nickname.toUpperCase()}, Welcome to the ${user.room.toUpperCase()}`})
-    socket.broadcast.to(user.room).emit('message', {user: 'admin', text: `${user.nickname}, has joined!`})
+    socket.emit('message', { user: 'ADMIN', text: `${user.nickname.toUpperCase()}, Welcome to the ${user.room.toUpperCase()}`})
+    socket.broadcast.to(user.room).emit('message', {user: 'ADMIN', text: `${user.nickname}, has joined!`})
     socket.join(user.room)
     callback()
   })

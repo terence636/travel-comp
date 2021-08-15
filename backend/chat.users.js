@@ -9,7 +9,9 @@ const addUser = ({id,nickname,room}) => {
         return { error: 'Username is taken' };
     }
 
-    const user = { id, nickname, room };
+    const colourList = ["blue", "green", "red", "orange"]
+    const colour = colourList[users.length % 4] 
+    const user = { id, nickname, room, colour};
     users.push(user);
     return { user }
 

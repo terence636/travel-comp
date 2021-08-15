@@ -6,7 +6,7 @@ const InfoBar = ({ nickname, room }) => {
     <div className="infoBar">
       <div className="leftInnerContainer">
         {/* <img className="onlineIcon" src="#" alt="online image" /> */}
-        <h4>Room: {room}</h4>
+        <h4>Room: {room.toUpperCase()}</h4>
       </div>
       <div className="rightInnerContainer">
         {/* <a href="/">

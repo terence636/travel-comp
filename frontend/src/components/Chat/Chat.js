@@ -19,8 +19,7 @@ const Chat = ({nickname, room}) => {
             extraHeaders: {
               "my-custom-header": "abcd"
         }})
-        socket.emit('join', { nickname, room }, ()=>{
-        })
+        socket.emit('join', { nickname, room }, ()=>{})
 
         return () => {
             socket.emit('disconnectUser')
@@ -56,20 +55,18 @@ const Chat = ({nickname, room}) => {
    },[])
 
    useEffect(()=>{
-        socket.emit('sendMessage', msg, ()=>{
+        
+        if(msg !== '') {
+            socket.emit('sendMessage', msg, ()=>{
             setMsg('')
-        })
+            })
+        }
    },[msg])
 
    const sendMessage = (event, msgToSend) => {
        event.preventDefault();
-    //    console.log(msgToSend)
+    // console.log(msgToSend)
        setMsg(msgToSend)
-        // if(msgToSend) {
-        //     socket.emit('sendMessage', msgToSend, ()=>{
-        //         setMsg('')
-        //     })
-        // }
    }
 
    console.log({msg},{msgs})
