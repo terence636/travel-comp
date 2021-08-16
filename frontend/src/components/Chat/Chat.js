@@ -3,7 +3,7 @@ import InfoBar from './InfoBar'
 import Input from './Input'
 import Messages from './Messages'
 import io from 'socket.io-client'
-const ENDPOINT = 'http://localhost:4000'
+// const ENDPOINT = 'http://localhost:4000'
 
 
 let socket;
@@ -14,7 +14,8 @@ const Chat = ({nickname, room}) => {
 
     useEffect(()=> {
         console.log(nickname)
-        socket = io(ENDPOINT, {
+        // socket = io(ENDPOINT, {
+            socket = io('/', {
             withCredentials: true,
             extraHeaders: {
               "my-custom-header": "abcd"
