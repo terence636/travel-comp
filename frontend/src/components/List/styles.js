@@ -23,7 +23,7 @@ export default makeStyles((theme) => ({
     marginBottom: '30px',
   },
   list: {
-    height: '70vh', overflow: 'auto',
+    height: '80vh', overflow: 'auto',
   },
   join: {
     height: '65vh',

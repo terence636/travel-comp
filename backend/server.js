@@ -3,7 +3,7 @@ const path = require("path");
 const app = express();
 const http = require("http");
 const mongoose = require("mongoose");
-// const session = require("express-session");
+const session = require("express-session");
 const methodOverride = require("method-override");
 const cors = require("cors");
 const httpServer = http.createServer(app);
@@ -28,27 +28,25 @@ app.use(methodOverride("_method"));
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../frontend/build")));
-// app.use(
-//   session({
-//     secret: process.env.SECRET,
-//     resave: false,
-//     saveUninitialized: false,
-//   })
-// );
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 // Controllers / Routers
 const pinRoutes = require("./routes/pin.js");
 app.use("/pin", pinRoutes);
 const usersRoutes = require("./routes/users.js");
-app.use("/user", usersRoutes);
+app.use("/users", usersRoutes);
+const sessionsRoutes = require("./routes/sessions.js")
+app.use("/sessions", sessionsRoutes)
 
 // app.get("/", (req, res) => {
-//   res.send("Hello World");
+//   res.sendFile(__dirname + "/index.html");
 // });
-
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
-});
 
 io.on("connection", (socket) => {
 
@@ -83,7 +81,7 @@ io.on("connection", (socket) => {
   })
 });
 
-httpServer.listen(process.env.PORT, () => {
+httpServer.listen(process.env.PORT || 4000, () => {
   console.log("Backend Server Listening on the port", process.env.PORT);
 });
 

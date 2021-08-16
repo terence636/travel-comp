@@ -5,9 +5,6 @@ import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import Rating from "@material-ui/lab/Rating";
 import useStyles from "./styles";
 import { Box } from "@material-ui/core"
-// import Room from "@material-ui/icons/Room";
-// import Popover from '@material-ui/core/Popover';
-// import Axios from 'axios'
 
 // const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
@@ -27,7 +24,7 @@ const Map = ({ coordinates, setCoordinates, setBounds, places, setChildClicked, 
         center={coordinates}
         defaultZoom={14}
         margin={[50, 50, 50, 50]}
-        options={""}
+        options={{ disableDefaultUI: true, zoomControl: true}}
         onChange={(e) => {
           console.log(e);
           setCoordinates({ lat: e.center.lat, lng: e.center.lng });
@@ -87,40 +84,6 @@ const Map = ({ coordinates, setCoordinates, setBounds, places, setChildClicked, 
         {/* <Room  lat={1.420181}
             lng={103.864555}
             onClick={handleClick}/> */}
-       {/* <Popover
-        lat={1.420181}
-        lng={103.864555}
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-      > */}
-        {/* <Typography className={classes.typography}>The content of the Popover.</Typography> */}
-        {/* <div className="image-uploader">     
-              <input
-                  name="image"
-                  type="file"
-                  onChange={(e) => {
-                    console.log({e})
-                    setUploadImage(e.target.files[0]);
-                  }}
-                  accept=".jpg,.jpeg,.gif,.png"
-                />
-              </div>
-              <div className="image-uploader">
-                <button onClick={upload} class="upload-image-btn">
-                  Upload Image
-                </button>
-              </div>
-        </Popover> */}
       </GoogleMapReact>
     </div>
   );

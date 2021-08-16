@@ -12,8 +12,10 @@ router.route("/").get(async (req, res) => {
 });
 
 router.route("/register").post(async (req, res) => {
-  // console.log(req.body)
-  //   const newUser = new User(req.body);
+  console.log(req.body)
+  foundUser = await User.find( {"username" : req.body.username})
+  console.log(foundUser)
+  if(foundUser.length === 0) {
   try {
     // generate new password
     console.log(req.body);
@@ -28,6 +30,9 @@ router.route("/register").post(async (req, res) => {
     res.status(200).json(savedUser);
   } catch (err) {
     res.status(400).json(err);
+  }
+  } else {
+    res.status(409).json({error: "Username taken"})
   }
 });
 
