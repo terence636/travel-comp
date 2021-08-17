@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "white",
   },
     loading: {
-    height: '600px', display: 'flex', justifyContent: 'center', alignItems: 'center',
+    height: '700px', display: 'flex', justifyContent: 'center', alignItems: 'center',
   },
 }));
 
@@ -47,39 +47,40 @@ const App = () => {
   }, []);
 
   // FILTER PLACES ACCORDING TO RATING
+  console.log({places})
   useEffect(()=>{
     const filter = places?.filter((place)=>place.rating > rating)
     setFilteredPlaces(filter)
   }, [rating,places])
 
+   // console.log({bounds})
+
   // TO GET PLACES DATA FROM RAPID API
-  // console.log({bounds})
-
-  useEffect(() => {
-    setIsLoading(true);
-    if (bounds.ne && bounds.sw ) {
-       getWeatherData(coordinates)
-       .then((data) => {
-         console.log({data})
-         setWeatherData(data)
-       })
-       .catch((err)=>console.log(err))
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   if (bounds.ne && bounds.sw ) {
+  //      getWeatherData(coordinates)
+  //      .then((data) => {
+  //        console.log({data})
+  //        setWeatherData(data)
+  //      })
+  //      .catch((err)=>console.log(err))
 
 
-      getPlacesData(type, bounds?.sw, bounds?.ne)
-        .then((data) => {
-          console.log({ data });
-          const filterData = data?.filter(
-            (place) => !place.hasOwnProperty("ad_position") && place.name && place.num_reviews > 0
-          );
-          console.log({ filterData });
-          setPlaces(filterData);
-          setFilteredPlaces([]);
-          setIsLoading(false);
-        })
-        .catch((err) => console.log(err));
-    }
-  }, [bounds, type]);
+  //     getPlacesData(type, bounds?.sw, bounds?.ne)
+  //       .then((data) => {
+  //         console.log({ data });
+  //         const filterData = data?.filter(
+  //           (place) => !place.hasOwnProperty("ad_position") && place.name && place.num_reviews > 0
+  //         );
+  //         console.log({ filterData });
+  //         setPlaces(filterData);
+  //         setFilteredPlaces([]);
+  //         setIsLoading(false);
+  //       })
+  //       .catch((err) => console.log(err));
+  //   }
+  // }, [bounds, type]);
 
   return (
     <>

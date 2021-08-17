@@ -3,7 +3,7 @@ import { Autocomplete } from '@react-google-maps/api'
 import { AppBar, Toolbar, Typography, InputBase, Box } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search'
 import useStyles from './styles'
-import { LoggedContext } from "../../Main.js";
+import { Context } from "../../Main.js";
 import { useHistory } from "react-router-dom";
 // import { Link } from "react-router-dom";
 
@@ -11,7 +11,7 @@ import { useHistory } from "react-router-dom";
 const Header = ({ setCoordinates, setRoom }) => {
     const classes = useStyles()
     const [autocomplete, setAutocomplete] = useState(null)
-    const loggedContext = useContext(LoggedContext);
+    const contextValue = useContext(Context);
     const history = useHistory();
     const onLoad = (autoC) => setAutocomplete(autoC)
     const onPlaceChanged = () => {
@@ -33,7 +33,7 @@ const Header = ({ setCoordinates, setRoom }) => {
           },
         });
         history.push("/");
-        loggedContext.setLogState();
+        contextValue.setLogState();
     };
 
     return (

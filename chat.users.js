@@ -6,7 +6,9 @@ const addUser = ({id,nickname,room}) => {
     const existinguser = users.find((user) => user.room === room && user.nickname === nickname);
 
     if(existinguser) {
-        return { error: 'Username is taken' };
+        // return { error: 'Username is taken' };
+        // return { user: existinguser}
+        removeUser(id)
     }
 
     const colourList = ["blue", "green", "red", "orange"]

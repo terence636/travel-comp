@@ -62,8 +62,8 @@ io.on("connection", (socket) => {
   socket.on("sendMessage", (msg,callback) => {
     console.log(msg)
     const user = getUser(socket.id)
-    console.log("allusers",getUsersInRoom(user.room))
-    io.to(user.room).emit('message',{ user: user.nickname, text: msg, colour: user.colour})
+    console.log("allusers",getUsersInRoom(user?.room))
+    io.to(user.room).emit('message',{ user: user?.nickname.toUpperCase(), text: msg, colour: user?.colour})
     callback()
   });
 
@@ -72,12 +72,12 @@ io.on("connection", (socket) => {
     const { error, user } = addUser({id:socket.id, nickname, room})
     console.log({error})
     console.log({user})
-    console.log("Allusers",getUsersInRoom(user.room))
+    console.log("Allusers",getUsersInRoom(user?.room))
     // if(error) return callback(error)
     console.log(`${user.nickname} has join the chat`)
-    socket.emit('message', { user: 'ADMIN', text: `${user.nickname.toUpperCase()}, Welcome to the ${user.room.toUpperCase()}`})
-    socket.broadcast.to(user.room).emit('message', {user: 'ADMIN', text: `${user.nickname}, has joined!`})
-    socket.join(user.room)
+    socket.emit('message', { user: 'ADMIN', text: `${user?.nickname.toUpperCase()}, Welcome to ${user?.room.toUpperCase()}`})
+    socket.broadcast.to(user.room).emit('message', {user: 'ADMIN', text: `${user?.nickname.toUpperCase()}, has joined!`})
+    socket.join(user?.room)
     callback()
   })
 });

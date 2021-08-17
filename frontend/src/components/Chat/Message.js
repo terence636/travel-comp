@@ -6,7 +6,7 @@ const Message = ({message, nickname}) => {
     const trimmedName = nickname.trim().toLowerCase()
     const { user, text, colour} = message
 
-    if(user === trimmedName)
+    if(user.toLowerCase() === trimmedName)
         isSentByCurrentUser = true
 
     return (
@@ -19,7 +19,7 @@ const Message = ({message, nickname}) => {
                 </div>
             </div>
         ) : (
-            <div className="MessageContainer justifyStart">
+            <div className="messageContainer justifyStart">
                 <div className="messageBox backgroundLight">
                     <p style={user!=="ADMIN"?{color:`${colour}`}:{color:'purple'}}>{user.toUpperCase()}</p>
                     <p className="messageText colorDark">{text}</p>

@@ -4,11 +4,11 @@ import App from './App'
 import Login from './components/Users/Login'
 import Register from './components/Users/Register'
 
-export const LoggedContext = createContext();
+export const Context = createContext();
 
 const Main = () => {
   const [logState, setLogState] = useState();
-  const contextState = { logState, setLogState };
+  const contextValue = { logState, setLogState };
   
   const PrivateRoute = ({component: Component, handleChildFunc, ...rest}) => {
     return <Route {...rest} render={(props) => (
@@ -21,7 +21,7 @@ const Main = () => {
 
     return (
         <div>
-        <LoggedContext.Provider value={contextState}>
+        <Context.Provider value={contextValue}>
         
             <Switch>
               <Route exact path ="/"><Redirect to="/login" /></Route>
@@ -30,7 +30,7 @@ const Main = () => {
               <Route path="/register" component={Register} />
             </Switch>
        
-        </LoggedContext.Provider>
+        </Context.Provider>
       </div>
     )
 }

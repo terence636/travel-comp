@@ -13,8 +13,7 @@ const Chat = ({nickname, room}) => {
     const [msgs, setMsgs] = useState([])
 
     useEffect(()=> {
-        console.log(nickname)
-        // socket = io(ENDPOINT, {
+            console.log(nickname)
             socket = io('/', {
             withCredentials: true,
             extraHeaders: {
@@ -22,6 +21,10 @@ const Chat = ({nickname, room}) => {
         }})
         socket.emit('join', { nickname, room }, ()=>{})
 
+        // check is it existing room
+        // if not create room
+        // if yes, get all messages from the room
+        
         return () => {
             socket.emit('disconnectUser')
             console.log("unmount", nickname)
@@ -29,48 +32,33 @@ const Chat = ({nickname, room}) => {
         }
 
     },[nickname])
-  
 
-    // useEffect(()=> {
-    //     console.log("room change")
-    //     socket.emit('disconnectUser')
-    //     console.log("unmount", nickname)
-    //     socket.off()
-        
-    //     socket = io(ENDPOINT, {
-    //         withCredentials: true,
-    //         extraHeaders: {
-    //           "my-custom-header": "abcd"
-    //     }})
-    //     socket.emit('join', { nickname, room }, ()=>{
-    //     })
-    // },[room])
 
+    // RECEIVE MSG FROM SERVER
    useEffect(()=>{
-        // console.log("HEY")
         socket.on('message',(newMsg)=>{
-        // console.log("socket-newmsg", newMsg)
-        // console.log(newMsg)
         setMsgs(prev=>[...prev,newMsg])
+        // update DB with newMsg
     })
    },[])
 
+   // SEND MESSAGE TO SERVER
    useEffect(()=>{
-        
         if(msg !== '') {
             socket.emit('sendMessage', msg, ()=>{
             setMsg('')
             })
         }
+        // update DB with newMsg
    },[msg])
 
+   // SET MSG STATE TO SEND OUT
    const sendMessage = (event, msgToSend) => {
        event.preventDefault();
-    // console.log(msgToSend)
        setMsg(msgToSend)
    }
 
-   console.log({msg},{msgs})
+//    console.log({msg},{msgs})
     return (
          <div className="chatContainer"> 
                 <InfoBar room={room} nickname={nickname} />

@@ -1,13 +1,13 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import { LoggedContext } from "../../Main.js";
+import { Context } from "../../Main.js";
 import '../../styles.css'
 
 
 
 const Login = () => {
-  const loggedContext = useContext(LoggedContext);
+  const contextValue = useContext(Context);
   let history = useHistory();
   const [userNotFound, setUserNotFound] = useState(false)
   const [passwordWrong, setPasswordWrong] = useState(false)
@@ -39,7 +39,7 @@ const Login = () => {
       })
       .then((resJson) => {
         if (resJson) {
-          loggedContext.setLogState(resJson);
+          contextValue.setLogState(resJson);
           history.push("/main")
         }
       }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef } from "react";
+import React, { useState, useEffect, createRef, useContext } from "react";
 import {
   CircularProgress,
   Grid,
@@ -14,6 +14,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Chat from '../Chat/Chat'
 import Join from '../Chat/Join'
+import { Context } from "../../Main.js";
 
 const List = ({places, childClicked, isLoading, type, rating, setType, setRating, setWeatherCheckBox, weatherCheckBox, room}) => {
     const classes = useStyles();
@@ -21,7 +22,7 @@ const List = ({places, childClicked, isLoading, type, rating, setType, setRating
     const [chatBox, setChatBox] = useState(false);
     const [nickname, setNickname] = useState('');
     
-
+    const contextValue = useContext(Context);
     // console.log({ childClicked })
   
    useEffect(()=> {
@@ -95,8 +96,9 @@ const List = ({places, childClicked, isLoading, type, rating, setType, setRating
         }
         label="Chat"
       />
-      {chatBox && nickname && <Chat nickname={nickname} room={room}/>}
-      {chatBox && !nickname && <Join setNickname={setNickname} /> }
+      {chatBox && <Chat nickname={contextValue.logState.username} room={room}/>}
+      {/* {chatBox && nickname && <Chat nickname={nickname} room={room}/>} */}
+      {/* {chatBox && !nickname && <Join setNickname={setNickname} /> } */}
       {!chatBox && <Grid container spacing={3} className={classes.list}>
             {places?.map((place,i)=>(
                 <Grid ref={elRefs[i]} item key={i} xs={12}>
