@@ -56,39 +56,39 @@ const App = () => {
    // console.log({bounds})
 
   // TO GET PLACES DATA FROM RAPID API
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   if (bounds.ne && bounds.sw ) {
-  //      getWeatherData(coordinates)
-  //      .then((data) => {
-  //        console.log({data})
-  //        setWeatherData(data)
-  //      })
-  //      .catch((err)=>console.log(err))
+  useEffect(() => {
+    setIsLoading(true);
+    if (bounds.ne && bounds.sw ) {
+       getWeatherData(coordinates)
+       .then((data) => {
+         console.log({data})
+         setWeatherData(data)
+       })
+       .catch((err)=>console.log(err))
 
 
-  //     getPlacesData(type, bounds?.sw, bounds?.ne)
-  //       .then((data) => {
-  //         console.log({ data });
-  //         const filterData = data?.filter(
-  //           (place) => !place.hasOwnProperty("ad_position") && place.name && place.num_reviews > 0
-  //         );
-  //         console.log({ filterData });
-  //         setPlaces(filterData);
-  //         setFilteredPlaces([]);
-  //         setIsLoading(false);
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }
-  // }, [bounds, type]);
+      getPlacesData(type, bounds?.sw, bounds?.ne)
+        .then((data) => {
+          console.log({ data });
+          const filterData = data?.filter(
+            (place) => !place.hasOwnProperty("ad_position") && place.name && place.num_reviews > 0
+          );
+          console.log({ filterData });
+          setPlaces(filterData);
+          setFilteredPlaces([]);
+          setIsLoading(false);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [bounds, type]);
 
   return (
     <>
       <CssBaseline>
         <Header setCoordinates={setCoordinates} setRoom={setRoom} />
-        <Grid container spacing={1} style={{ width: "100%" }}>
-          <Grid item xs={12} md={4}>
-            <div className={classes.grid1}>
+        <Grid container spacing={1}>
+          <Grid className={classes.grid1} item sm={12} lg={4}>
+            {/* <div className={classes.grid1}> */}
               <List
                 places={filteredPlaces.length !== 0 ? filteredPlaces : places}
                 childClicked={childClicked}
@@ -101,10 +101,11 @@ const App = () => {
                 setWeatherCheckBox={setWeatherCheckBox}
                 room={room}
               />
-            </div>
+        
+            {/* </div> */}
           </Grid>
-          <Grid item xs={12} md={8}>
-            <div>
+          <Grid item sm={12} lg={8}>
+       
               {isMapLoading ? (
                    <div className={classes.loading}>
                    <CircularProgress size="5rem" />
@@ -121,7 +122,7 @@ const App = () => {
                 weatherCheckBox={weatherCheckBox}
               />
               )}
-            </div>
+        
           </Grid>
         </Grid>
       </CssBaseline>

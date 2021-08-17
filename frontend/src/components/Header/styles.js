@@ -31,5 +31,6 @@ export default makeStyles((theme) => ({
   },
   logout: {
     cursor: 'pointer',
+    marginLeft: 5,
   }
 }));

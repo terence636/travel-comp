@@ -54,7 +54,7 @@ const Header = ({ setCoordinates, setRoom }) => {
                             <InputBase placeholder="Search..." classes={{ root: classes.inputRoot, input: classes.inputInput}} />
                         </div>
                     </Autocomplete>
-                    <Typography variant="h6" className={classes.title}>
+                    <Typography variant="h6">
                         {/* <Link to="/login">Logout</Link> */}
                         <div onClick={handleLogout} className={classes.logout}>Logout</div>
                     </Typography>

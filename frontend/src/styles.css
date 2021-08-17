@@ -161,3 +161,14 @@ form .name-details .field:last-child {
 /* .wrapper img {
   
 } */
+
+@media only screen and (max-width: 380px) {
+  /*for mobile phones */
+  /*Below not applicable as im using React Bootstrap grid */
+  /* [class*="col-"] {
+    width: 100%;
+  } */
+  .mobile {
+    width: 100%;
+  }
+}
