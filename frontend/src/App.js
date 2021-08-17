@@ -40,10 +40,12 @@ const App = () => {
   // map changes
   useEffect(() => {
     setIsMapLoading(true)
-    navigator.geolocation.getCurrentPosition((pos) => {
+    navigator.geolocation.getCurrentPosition(function(pos) {
       setCoordinates({ lat: pos.coords.latitude, lng: pos.coords.longitude });
       setIsMapLoading(false)
-    });
+    }, function (error) {
+      alert(error.message)
+    },{ enableHighAccuracy: true, timeout:5000});
   }, []);
 
   // FILTER PLACES ACCORDING TO RATING
