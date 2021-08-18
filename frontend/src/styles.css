@@ -14,8 +14,11 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  /* background-color: #f7f7f7; */
-  background-color: #998484;
+  min-width: 100%;
+  background-image: url(./components/Users/canoe-wide1.jpeg);
+  background-size: cover;
+  background-position: center center;
+  
 }
 
 .wrapperUser {
@@ -27,7 +30,6 @@
               
 }
 
-/* Signup From CSS Code */
 .formUser{
   padding: 25px 30px;
 }
@@ -149,7 +151,7 @@ form .name-details .field:last-child {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%)
+  transform: translate(-50%, -50%);
 }
 
 .btstyle {
@@ -158,17 +160,14 @@ form .name-details .field:last-child {
   border-radius: 8px;
   padding: 14px 40px;
 }
-/* .wrapper img {
-  
-} */
 
-@media only screen and (max-width: 380px) {
+@media only screen and (max-width: 600px) {
   /*for mobile phones */
   /*Below not applicable as im using React Bootstrap grid */
   /* [class*="col-"] {
     width: 100%;
   } */
-  .mobile {
-    width: 100%;
+  .containerUser {
+    background-image: url(./components/Users/canoe.jpeg);
   }
 }

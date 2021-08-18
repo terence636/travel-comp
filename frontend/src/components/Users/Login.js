@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { Context } from "../../Main.js";
 import '../../styles.css'
+import pic from './canoe.jpeg'
 
 
 
@@ -48,7 +49,9 @@ const Login = () => {
 
   return (
     <div className="containerUser">
+    {/* <img src={pic} alt="canoe" width="1000" height="600"/>   */}
     <div className="wrapperUser">
+    
       <section className="formUser login">
         <header>Login</header>
         <form onSubmit={handleLoginUser}>

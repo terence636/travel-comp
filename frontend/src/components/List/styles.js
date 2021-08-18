@@ -1,3 +1,4 @@
+import { blue } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
@@ -14,10 +15,11 @@ export default makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   loading: {
-    height: '600px', display: 'flex', justifyContent: 'center', alignItems: 'center',
+    height: '700px', display: 'flex', justifyContent: 'center', alignItems: 'center',
   },
   container: {
     padding: '25px',
+    backgroundColor: 'rgb(170,218,254)',
   },
   marginBottom: {
     marginBottom: '30px',

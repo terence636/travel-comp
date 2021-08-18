@@ -25,7 +25,7 @@ const App = () => {
   const [places, setPlaces] = useState([]);
   const [weatherData, setWeatherData] = useState([]);
   const [filteredPlaces, setFilteredPlaces] = useState([]);
-  const [coordinates, setCoordinates] = useState({});
+  const [coordinates, setCoordinates] = useState({lat:1.3973207, lng: 103.9156448});
   const [bounds, setBounds] = useState({});
   const [childClicked, setChildClicked] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -38,18 +38,19 @@ const App = () => {
   // TO GET THE CURRENT GPS POSITION WHEN LOADING FIRST TIME
   // SUBSEQUENT CHANGES ARE BY setCoord and setBounds when
   // map changes
-  useEffect(() => {
-    setIsMapLoading(true)
-    navigator.geolocation.getCurrentPosition(function(pos) {
-      setCoordinates({ lat: pos.coords.latitude, lng: pos.coords.longitude });
-      setIsMapLoading(false)
-    }, function (error) {
-      alert(error.message)
-    },{ enableHighAccuracy: true, timeout:5000});
-  }, []);
+  // useEffect(() => {
+  //   setIsMapLoading(true)
+  //   navigator.geolocation.getCurrentPosition(function(pos) {
+  //     console.log({pos})
+  //     setCoordinates({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+  //     setIsMapLoading(false)
+  //   }, function (error) {
+  //     alert(error.message)
+  //   },{ enableHighAccuracy: true, timeout:5000});
+  // }, []);
 
   // FILTER PLACES ACCORDING TO RATING
-  console.log({places})
+  // console.log({places})
   useEffect(()=>{
     const filter = places?.filter((place)=>place.rating > rating)
     setFilteredPlaces(filter)
@@ -88,11 +89,11 @@ const App = () => {
     <>
       <CssBaseline>
         <Header setCoordinates={setCoordinates} setRoom={setRoom} />
-        <Grid container spacing={1}>
-          <Grid className={classes.grid1} item sm={12} lg={4}>
-            {/* <div className={classes.grid1}> */}
+        <Grid container spacing={1} style={{ width: '100%' }}>
+          <Grid  item sm={12} lg={4}>
+            <div className={classes.grid1}>
               <List
-                places={filteredPlaces.length !== 0 ? filteredPlaces : places}
+                places={filteredPlaces?.length !== 0 ? filteredPlaces : places}
                 childClicked={childClicked}
                 isLoading={isLoading}
                 type={type}
@@ -104,7 +105,7 @@ const App = () => {
                 room={room}
               />
         
-            {/* </div> */}
+            </div>
           </Grid>
           <Grid item sm={12} lg={8}>
        

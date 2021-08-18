@@ -14,7 +14,7 @@ const Main = () => {
     return <Route {...rest} render={(props) => (
       logState !== undefined
       ? <Component {...props} handleChildFunc={handleChildFunc}/>
-      :<div className="center">Please Login To Access<br/><button className="btstyle"><Link to="/login">Login</Link></button></div>
+      :<div className="center"><button className="btstyle"><Link to="/login">Please Login To Access</Link></button></div>
     )}
     />
   }
