@@ -1,22 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { createLogEntry } from '../../api/LogEntriesApi';
+import { Context } from "../../Main.js";
 
 const LogEntryForm = ({ location, onClose }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const { register, handleSubmit } = useForm();
-
+  const contextValue = useContext(Context);
  
-
+  const username = contextValue.logState.username
   const onSubmit = async (data) => {
       console.log({data})
     try {
       setLoading(true);
       data.latitude = location.lat;
       data.longitude = location.lng;
-      await createLogEntry(data);
+      await createLogEntry(data,username);
       onClose();
     } catch (error) {
       console.error(error);

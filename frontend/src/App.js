@@ -33,7 +33,7 @@ const App = () => {
   const [isMapLoading, setIsMapLoading] = useState(false)
   const [type, setType] = useState("restaurants");
   const [rating, setRating] = useState(0);
-  const [weatherCheckBox, setWeatherCheckBox] = useState(false)
+  const [logCheckBox, setLogCheckBox] = useState(false)
   const [room, setRoom] = useState('Singapore')
 
   // TO GET THE CURRENT GPS POSITION WHEN LOADING FIRST TIME
@@ -55,36 +55,38 @@ const App = () => {
   useEffect(()=>{
     const filter = places?.filter((place)=>place.rating > rating)
     setFilteredPlaces(filter)
-  }, [rating,places])
+  }, [rating])
 
    // console.log({bounds})
 
   // TO GET PLACES DATA FROM RAPID API
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   if (bounds.ne && bounds.sw ) {
-  //      getWeatherData(coordinates)
-  //      .then((data) => {
-  //        console.log({data})
-  //        setWeatherData(data)
-  //      })
-  //      .catch((err)=>console.log(err))
+  useEffect(() => {
+    if(logCheckBox)
+      return
+    setIsLoading(true);
+    if (bounds.ne && bounds.sw ) {
+       getWeatherData(coordinates)
+       .then((data) => {
+         console.log({data})
+         setWeatherData(data)
+       })
+       .catch((err)=>console.log(err))
 
 
-  //     getPlacesData(type, bounds?.sw, bounds?.ne)
-  //       .then((data) => {
-  //         console.log({ data });
-  //         const filterData = data?.filter(
-  //           (place) => !place.hasOwnProperty("ad_position") && place.name && place.num_reviews > 0
-  //         );
-  //         console.log({ filterData });
-  //         setPlaces(filterData);
-  //         setFilteredPlaces([]);
-  //         setIsLoading(false);
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }
-  // }, [bounds, type]);
+      getPlacesData(type, bounds?.sw, bounds?.ne)
+        .then((data) => {
+          console.log({ data });
+          const filterData = data?.filter(
+            (place) => !place.hasOwnProperty("ad_position") && place.name && place.num_reviews > 0
+          );
+          console.log({ filterData });
+          setPlaces(filterData);
+          setFilteredPlaces([]);
+          setIsLoading(false);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [bounds, type]);
 
   return (
     <>
@@ -101,8 +103,8 @@ const App = () => {
                 setType={setType}
                 rating={rating}
                 setRating={setRating}
-                weatherCheckBox={weatherCheckBox}
-                setWeatherCheckBox={setWeatherCheckBox}
+                logCheckBox={logCheckBox}
+                setLogCheckBox={setLogCheckBox}
                 room={room}
               />
         
@@ -119,11 +121,11 @@ const App = () => {
                 coordinates={coordinates}
                 setCoordinates={setCoordinates}
                 setBounds={setBounds}
-                places={filteredPlaces.length !== 0 ? filteredPlaces : places}
+                places={filteredPlaces?.length !== 0 ? filteredPlaces : places}
                 setChildClicked={setChildClicked}
                 weatherData={weatherData}
                 type={type}
-                weatherCheckBox={weatherCheckBox}
+                logCheckBox={logCheckBox}
               />
               )}
         

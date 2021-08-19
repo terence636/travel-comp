@@ -16,7 +16,7 @@ import Chat from '../Chat/Chat'
 // import Join from '../Chat/Join'
 import { Context } from "../../Main.js";
 
-const List = ({places, childClicked, isLoading, type, rating, setType, setRating, setWeatherCheckBox, weatherCheckBox, room}) => {
+const List = ({places, childClicked, isLoading, type, rating, setType, setRating, setLogCheckBox, logCheckBox, room}) => {
     const classes = useStyles();
     const [elRefs, setElRefs] = useState([]);
     const [chatBox, setChatBox] = useState(false);
@@ -46,7 +46,7 @@ const List = ({places, childClicked, isLoading, type, rating, setType, setRating
   return (
     <div className={classes.container}>
         <Typography variant="h5">
-            Travel Places & Logs
+            Travel Places Around You
         </Typography>
         {isLoading ? (
             <div className={classes.loading}>
@@ -61,7 +61,7 @@ const List = ({places, childClicked, isLoading, type, rating, setType, setRating
                 <MenuItem value="restaurants">Restaurants</MenuItem>
                 <MenuItem value="hotels">Hotels</MenuItem>
                 <MenuItem value="attractions">Attractions</MenuItem>
-                <MenuItem value="weather">Travel Logs</MenuItem>
+                {/* <MenuItem value="weather">Travel Logs</MenuItem> */}
             </Select>
         </FormControl>
         {<FormControl className={classes.formControlRating}>
@@ -73,22 +73,21 @@ const List = ({places, childClicked, isLoading, type, rating, setType, setRating
                 {/* <MenuItem value={4.5}>Above 4.5</MenuItem> */}
             </Select>
         </FormControl> }
-        {/* <FormControlLabel className={classes.formControlLabel}
+        <FormControlLabel className={classes.formControlLabel}
         control={
           <Checkbox
-            checked={weatherCheckBox}
-            onChange={(e)=>setWeatherCheckBox(e.target.checked)}
+            checked={logCheckBox}
+            onChange={(e)=>setLogCheckBox(e.target.checked)}
             name="check"
             color="primary"
           />
         }
-        label="Weather Only"
-      /> */}
+        label="Logs"
+      />
        <FormControlLabel className={classes.formControlLabel}
         control={
           <Checkbox
             checked={chatBox}
-            // onChange={(e)=>setChatBox(e.target.checked)}
             onChange={(e)=>handleChatBox(e)}
             name="check"
             color="primary"

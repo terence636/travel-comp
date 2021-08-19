@@ -1,10 +1,12 @@
-export async function listLogEntries() {
-  const response = await fetch("/logs");
+
+export async function listLogEntries(username) {
+  const response = await fetch(`/logs/${username}`);
   return response.json();
 }
 
-export async function createLogEntry(entry) {
+export async function createLogEntry(entry,username) {
   console.log({ entry });
+  entry.username = username
   try {
     const response = await fetch("/logs", {
       method: "POST",

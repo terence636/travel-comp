@@ -30,6 +30,20 @@ router.route("/")
     }
   })
   
+router.route("/:id")
+.get(async (req, res, next) => {
+    try {
+        // console.log("here")
+      const logs = await Logs.find({username: req.params.id});
+      res.status(200).json(logs);
+    //   console.log({logs})
+    //   res.send("ok")
+    } catch (err) {
+        console.log(err)
+      res.status(400).json(err);
+    }
+  })
+
   router.route("/:id").delete(async (req, res) => {
       console.log("delete")
     Logs.findByIdAndRemove(req.params.id, (err, deletedMatch) => {

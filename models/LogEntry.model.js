@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const logEntrySchema = new mongoose.Schema({
+  username: { type: String, required: true },
   title: { type: String, required: true},
   description: String,
   comments: String,

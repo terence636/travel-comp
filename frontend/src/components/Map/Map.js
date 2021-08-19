@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import GoogleMapReact from "google-map-react";
 import { Paper, Typography, useMediaQuery } from "@material-ui/core";
 import LocationOnSharpIcon from '@material-ui/icons/LocationOnSharp';
@@ -6,26 +6,25 @@ import AddLocationSharpIcon from "@material-ui/icons/AddLocationSharp";
 import LogEntryForm from './LogEntryForm'
 import { listLogEntries } from '../../api/LogEntriesApi'
 import { deleteLogEntry } from '../../api/LogEntriesApi';
-// import Rating from "@material-ui/lab/Rating";
 import useStyles from "./styles";
 import { Box } from "@material-ui/core"
+import { Context } from "../../Main.js";
+const isIcon = true;
 
-// const AnyReactComponent = ({ text }) => <div>{text}</div>;
-
-const Map = ({ coordinates, setCoordinates, setBounds, places, setChildClicked, weatherData }) => {
+const Map = ({ coordinates, setCoordinates, setBounds, places, setChildClicked, weatherData, logCheckBox }) => {
   const classes = useStyles();
-  const isDesktop = useMediaQuery('(min-width:640px)');
+ 
   const [logEntries, setLogEntries] = useState([])
   const [showPopup, setShowPopup] = useState({});
   const [addEntryLocation, setAddEntryLocation] = useState(null);
   const [isEntryFormActive, setIsEntryFormActive] = useState(false);
   const [isLogEntryShown, setIsLogEntryShown] = useState(false)
   const [renderScreen, setRenderScreen] = useState(false)
+  const contextValue = useContext(Context);
 
-  console.log({addEntryLocation})
+  const username = contextValue.logState.username;
   const showAddMarkerPopup = ({x, y, lat, lng, event}) => {
-    // console.log(x, y, lat, lng, event)
-    if(isEntryFormActive || isLogEntryShown)
+    if(isEntryFormActive || isLogEntryShown || !logCheckBox)
       return
     setAddEntryLocation({lat,lng,});
     setIsEntryFormActive(true)
@@ -36,7 +35,7 @@ const Map = ({ coordinates, setCoordinates, setBounds, places, setChildClicked, 
   }
 
   const getEntries = async () => {
-    const logEntries = await listLogEntries();
+    const logEntries = await listLogEntries(username);
     console.log({logEntries})
     setLogEntries(logEntries);
   };
@@ -77,19 +76,15 @@ const Map = ({ coordinates, setCoordinates, setBounds, places, setChildClicked, 
         margin={[50, 50, 50, 50]}
         options={{ disableDefaultUI: true, zoomControl: true}}
         onChange={(e) => {
-          // console.log(e);
           setCoordinates({ lat: e.center.lat, lng: e.center.lng });
           setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
         }}
         onChildClick={(child) => {setChildClicked(child)}}
-        // yesIWantToUseGoogleMapApiInternals = {true}
-        // onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
-        // $hover={"false"}
         onClick={showAddMarkerPopup}
         onChildMouseEnter={handleChildMouseEnter}
       >
       {
-          logEntries.map(entry => (
+          logCheckBox && logEntries.map(entry => (
             <Box
               lat={entry.latitude}
               lng={entry.longitude}
@@ -104,7 +99,6 @@ const Map = ({ coordinates, setCoordinates, setBounds, places, setChildClicked, 
                  <p>{entry.comments}</p>
                  <p>{entry.description}</p>
                  <small>Visited on: {new Date(entry.visitDate).toLocaleDateString()}</small><br />
-                 {/* {entry.image && <img src={entry.image} alt={entry.title} />} */}
                  <button onClick={()=>handleCloseLogEntryClick(entry)}>Close</button>
                  <button onClick={()=>handleDeleteLogEntryClick(entry)}>Delete</button>
                </div>
@@ -133,7 +127,7 @@ const Map = ({ coordinates, setCoordinates, setBounds, places, setChildClicked, 
 
       } 
 
-      {places?.map((place, i) => (
+      {!logCheckBox && places?.map((place, i) => (
           <Box
             className={classes.markerContainer}
             lat={Number(place.latitude)}
@@ -141,7 +135,7 @@ const Map = ({ coordinates, setCoordinates, setBounds, places, setChildClicked, 
             key={i}
           >
             {
-              isDesktop ? (
+              isIcon ? (
                 <>
                 {/* <Typography
                 className={classes.typography}

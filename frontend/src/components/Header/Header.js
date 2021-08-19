@@ -42,6 +42,15 @@ const Header = ({ setCoordinates, setRoom }) => {
                 <Typography variant="h5" className={classes.title}>
                     Travel Companion
                 </Typography>
+                <Typography variant="h5" className={classes.title}>
+                    
+                </Typography>
+                <Typography variant="h6" className={classes.title}>
+                    Travel Places
+                </Typography>
+                <Typography variant="h6" className={classes.title}>
+                    Travel Logs
+                </Typography>
                 <Box display="flex">
                     <Typography variant="h6" className={classes.title}>
                         Explore new places
@@ -54,9 +63,13 @@ const Header = ({ setCoordinates, setRoom }) => {
                             <InputBase placeholder="Search..." classes={{ root: classes.inputRoot, input: classes.inputInput}} />
                         </div>
                     </Autocomplete>
-                    <Typography variant="h6">
+                    <Typography variant="h8">
                         {/* <Link to="/login">Logout</Link> */}
-                        <div onClick={handleLogout} className={classes.logout}>Logout</div>
+                        <div onClick={handleLogout} className={classes.logout}>
+                            <p>Logout</p>
+                            <p>{`Welcome ${contextValue.logState.username.toUpperCase()}`}</p>
+                        </div>
+                        
                     </Typography>
                 </Box>
             </Toolbar>
