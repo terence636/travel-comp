@@ -23,7 +23,7 @@ const List = ({places, childClicked, isLoading, type, rating, setType, setRating
     // const [nickname, setNickname] = useState('');
     
     const contextValue = useContext(Context);
-    console.log({ childClicked })
+    // console.log({ childClicked })
   
    useEffect(()=> {
     const refs = Array(places?.length).fill().map((_,i)=> elRefs[i] || createRef());

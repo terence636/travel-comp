@@ -1,6 +1,7 @@
 
 export async function listLogEntries(username) {
-  const response = await fetch(`/logs/${username}`);
+  console.log("listLog")
+  const response = await fetch("/logs");
   return response.json();
 }
 

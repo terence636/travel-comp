@@ -16,7 +16,7 @@ router.route("/register").post(async (req, res) => {
   
   // console.log(req.body)
   foundUser = await User.find( {"username" : req.body.username})
-  // console.log(foundUser)
+  console.log(foundUser)
   if(foundUser.length === 0) {
     try {
     // generate new password

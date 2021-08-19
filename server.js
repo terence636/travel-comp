@@ -35,9 +35,7 @@ app.use(
     saveUninitialized: false,
   })
 );
-app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./frontend/build", "index.html"));
-});
+
 
 // Controllers / Routers
 const usersRoutes = require("./routes/users.js");
@@ -95,6 +93,10 @@ httpServer.listen(process.env.PORT || 4000, () => {
 // httpServer.listen(3000, () => {
 //   console.log('listening on *:3000');
 // });
+
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./frontend/build", "index.html"));
+});
 
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,

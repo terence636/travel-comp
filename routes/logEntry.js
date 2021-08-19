@@ -1,14 +1,28 @@
 const router = require("express").Router();
 const Logs = require("../models/logEntry.model.js");
 
-router.route("/")
+router.route("/:username")
 .get(async (req, res, next) => {
     try {
-        // console.log("here")
-      const logs = await Logs.find({});
+        console.log("here")
+      const logs = await Logs.find({username: req.params.username});
+      console.log({logs})
       res.status(200).json(logs);
     //   console.log({logs})
     //   res.send("ok")
+    } catch (err) {
+        console.log(err)
+      res.status(400).json(err);
+    }
+  })
+
+router.route("/")
+.get(async (req, res, next) => {
+    try {
+   
+      const logs = await Logs.find({});
+      res.status(200).json(logs);
+
     } catch (err) {
         console.log(err)
       res.status(400).json(err);
@@ -30,19 +44,6 @@ router.route("/")
     }
   })
   
-router.route("/:id")
-.get(async (req, res, next) => {
-    try {
-        // console.log("here")
-      const logs = await Logs.find({username: req.params.id});
-      res.status(200).json(logs);
-    //   console.log({logs})
-    //   res.send("ok")
-    } catch (err) {
-        console.log(err)
-      res.status(400).json(err);
-    }
-  })
 
   router.route("/:id").delete(async (req, res) => {
       console.log("delete")

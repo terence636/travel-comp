@@ -35,12 +35,14 @@ const Map = ({ coordinates, setCoordinates, setBounds, places, setChildClicked, 
   }
 
   const getEntries = async () => {
+    console.log({username})
     const logEntries = await listLogEntries(username);
     console.log({logEntries})
     setLogEntries(logEntries);
   };
 
   useEffect(() => {
+    console.log("hey")
     getEntries();
   },[addEntryLocation, renderScreen]);
 
