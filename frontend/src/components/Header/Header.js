@@ -42,15 +42,7 @@ const Header = ({ setCoordinates, setRoom }) => {
                 <Typography variant="h5" className={classes.title}>
                     Travel Companion
                 </Typography>
-                <Typography variant="h5" className={classes.title}>
-                    
-                </Typography>
-                <Typography variant="h6" className={classes.title}>
-                    Travel Places
-                </Typography>
-                <Typography variant="h6" className={classes.title}>
-                    Travel Logs
-                </Typography>
+    
                 <Box display="flex">
                     <Typography variant="h6" className={classes.title}>
                         Explore new places

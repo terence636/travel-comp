@@ -35,9 +35,9 @@ app.use(
     saveUninitialized: false,
   })
 );
-// app.get("/*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "./frontend/build", "index.html"));
-// });
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./frontend/build", "index.html"));
+});
 
 // Controllers / Routers
 const usersRoutes = require("./routes/users.js");
