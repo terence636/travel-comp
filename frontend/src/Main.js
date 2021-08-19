@@ -25,7 +25,8 @@ const Main = () => {
         
             <Switch>
               <Route exact path ="/"><Redirect to="/login" /></Route>
-              <PrivateRoute path="/main" component={App} />
+              {/* <PrivateRoute path="/main" component={App} /> */}
+               <Route path="/main" component={App} />
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
             </Switch>

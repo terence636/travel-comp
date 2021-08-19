@@ -13,24 +13,24 @@ import PlaceDetails from '../PlaceDetails/PlaceDetails'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Chat from '../Chat/Chat'
-import Join from '../Chat/Join'
+// import Join from '../Chat/Join'
 import { Context } from "../../Main.js";
 
 const List = ({places, childClicked, isLoading, type, rating, setType, setRating, setWeatherCheckBox, weatherCheckBox, room}) => {
     const classes = useStyles();
     const [elRefs, setElRefs] = useState([]);
     const [chatBox, setChatBox] = useState(false);
-    const [nickname, setNickname] = useState('');
+    // const [nickname, setNickname] = useState('');
     
     const contextValue = useContext(Context);
-    // console.log({ childClicked })
+    console.log({ childClicked })
   
    useEffect(()=> {
     const refs = Array(places?.length).fill().map((_,i)=> elRefs[i] || createRef());
     // console.log({refs})
     setElRefs(refs);
     setChatBox(false)
-    setNickname('')
+    // setNickname('')
    }, [places])
 
   //  const handleSetType = (e) => {
@@ -40,13 +40,13 @@ const List = ({places, childClicked, isLoading, type, rating, setType, setRating
   //  }
   const handleChatBox = (e) => {
     setChatBox(e.target.checked)
-    setNickname('')
+    // setNickname('')
   }
 
   return (
     <div className={classes.container}>
         <Typography variant="h5">
-            Restaurants, Hotels & Attractions around you
+            Travel Places & Logs
         </Typography>
         {isLoading ? (
             <div className={classes.loading}>
@@ -61,7 +61,7 @@ const List = ({places, childClicked, isLoading, type, rating, setType, setRating
                 <MenuItem value="restaurants">Restaurants</MenuItem>
                 <MenuItem value="hotels">Hotels</MenuItem>
                 <MenuItem value="attractions">Attractions</MenuItem>
-                {/* <MenuItem value="weather">Weather</MenuItem> */}
+                <MenuItem value="weather">Travel Logs</MenuItem>
             </Select>
         </FormControl>
         {<FormControl className={classes.formControlRating}>
@@ -73,7 +73,7 @@ const List = ({places, childClicked, isLoading, type, rating, setType, setRating
                 {/* <MenuItem value={4.5}>Above 4.5</MenuItem> */}
             </Select>
         </FormControl> }
-        <FormControlLabel className={classes.formControlLabel}
+        {/* <FormControlLabel className={classes.formControlLabel}
         control={
           <Checkbox
             checked={weatherCheckBox}
@@ -83,7 +83,7 @@ const List = ({places, childClicked, isLoading, type, rating, setType, setRating
           />
         }
         label="Weather Only"
-      />
+      /> */}
        <FormControlLabel className={classes.formControlLabel}
         control={
           <Checkbox

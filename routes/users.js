@@ -6,17 +6,19 @@ router.route("/").get(async (req, res) => {
   try {
     const users = await User.find();
     res.status(200).json(users);
+    console.log(users)
   } catch (err) {
     res.status(400).json(err);
   }
 });
 
 router.route("/register").post(async (req, res) => {
-  console.log(req.body)
+  
+  // console.log(req.body)
   foundUser = await User.find( {"username" : req.body.username})
-  console.log(foundUser)
+  // console.log(foundUser)
   if(foundUser.length === 0) {
-  try {
+    try {
     // generate new password
     console.log(req.body);
     const salt = await bcrypt.genSalt(10);

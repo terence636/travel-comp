@@ -161,6 +161,38 @@ form .name-details .field:last-child {
   padding: 14px 40px;
 }
 
+.popup {
+  width: 20vw;
+  background-color: orange;
+  /* padding: 1rem; */
+}
+
+.popup img {
+  height: 200px;
+  width: auto;
+  text-align: center;
+  margin: 0 auto;
+  display: block;
+}
+
+.entry-form label,
+.entry-form input,
+.entry-form textarea,
+.entry-form button,
+.buttonPopUpCancel {
+  font-size: 1rem;
+  margin: 0.5rem auto;
+  display: block;
+  width: 90%;
+}
+
+/* .buttonPopUpCancel {
+  font-size: 1rem;
+  margin: 0.5rem auto;
+  display: block;
+  width: 90%;
+} */
+
 @media only screen and (max-width: 600px) {
   /*for mobile phones */
   /*Below not applicable as im using React Bootstrap grid */

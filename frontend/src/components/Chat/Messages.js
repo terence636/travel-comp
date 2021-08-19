@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react'
+// import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import ScrollToBottom from 'react-scroll-to-bottom'
 import Message from './Message'
 

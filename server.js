@@ -35,15 +35,17 @@ app.use(
     saveUninitialized: false,
   })
 );
-app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./frontend/build", "index.html"));
-});
+// app.get("/*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "./frontend/build", "index.html"));
+// });
 
 // Controllers / Routers
 const usersRoutes = require("./routes/users.js");
 app.use("/users", usersRoutes);
 const sessionsRoutes = require("./routes/sessions.js")
 app.use("/sessions", sessionsRoutes)
+const logEntryRoutes = require("./routes/logEntry.js")
+app.use("/logs", logEntryRoutes)
 
 // app.get("/", (req, res) => {
 //   res.sendFile(__dirname + "/index.html");
@@ -83,8 +85,12 @@ io.on("connection", (socket) => {
 });
 
 httpServer.listen(process.env.PORT || 4000, () => {
-  console.log("Backend Server Listening on the port", process.env.PORT);
+  console.log("Chat Server Listening on the port", process.env.PORT);
 });
+
+// app.listen(4000, () => {
+//   console.log("Listening on the port", 4000);
+// });
 
 // httpServer.listen(3000, () => {
 //   console.log('listening on *:3000');

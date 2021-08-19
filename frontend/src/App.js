@@ -4,9 +4,10 @@ import { CircularProgress, CssBaseline, Grid } from "@material-ui/core";
 import Header from "./components/Header/Header";
 import List from "./components/List/List";
 import Map from "./components/Map/Map";
+// import Map2 from "./components/Map/Map2";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { getPlacesData, getWeatherData } from "./api/api";
+import { getPlacesData, getWeatherData } from "./api/RapidApi";
 
 const useStyles = makeStyles((theme) => ({
   grid1: {
@@ -59,31 +60,31 @@ const App = () => {
    // console.log({bounds})
 
   // TO GET PLACES DATA FROM RAPID API
-  useEffect(() => {
-    setIsLoading(true);
-    if (bounds.ne && bounds.sw ) {
-       getWeatherData(coordinates)
-       .then((data) => {
-         console.log({data})
-         setWeatherData(data)
-       })
-       .catch((err)=>console.log(err))
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   if (bounds.ne && bounds.sw ) {
+  //      getWeatherData(coordinates)
+  //      .then((data) => {
+  //        console.log({data})
+  //        setWeatherData(data)
+  //      })
+  //      .catch((err)=>console.log(err))
 
 
-      getPlacesData(type, bounds?.sw, bounds?.ne)
-        .then((data) => {
-          console.log({ data });
-          const filterData = data?.filter(
-            (place) => !place.hasOwnProperty("ad_position") && place.name && place.num_reviews > 0
-          );
-          console.log({ filterData });
-          setPlaces(filterData);
-          setFilteredPlaces([]);
-          setIsLoading(false);
-        })
-        .catch((err) => console.log(err));
-    }
-  }, [bounds, type]);
+  //     getPlacesData(type, bounds?.sw, bounds?.ne)
+  //       .then((data) => {
+  //         console.log({ data });
+  //         const filterData = data?.filter(
+  //           (place) => !place.hasOwnProperty("ad_position") && place.name && place.num_reviews > 0
+  //         );
+  //         console.log({ filterData });
+  //         setPlaces(filterData);
+  //         setFilteredPlaces([]);
+  //         setIsLoading(false);
+  //       })
+  //       .catch((err) => console.log(err));
+  //   }
+  // }, [bounds, type]);
 
   return (
     <>

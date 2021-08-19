@@ -13,4 +13,8 @@ export default makeStyles(() => ({
   pointer: {
     cursor: 'pointer',
   },
+  mapSize: {
+    width: '80wh',
+    height: '90vh'
+  },
 }));

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { Context } from "../../Main.js";
 import '../../styles.css'
-import pic from './canoe.jpeg'
+// import pic from './canoe.jpeg'
 
 
 

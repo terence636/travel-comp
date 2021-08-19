@@ -13,7 +13,7 @@ const Chat = ({nickname, room}) => {
     const [msgs, setMsgs] = useState([])
 
     useEffect(()=> {
-            console.log(nickname)
+            // console.log(nickname)
             socket = io('/', {
             withCredentials: true,
             extraHeaders: {
@@ -31,7 +31,8 @@ const Chat = ({nickname, room}) => {
             socket.off()
         }
 
-    },[nickname])
+    // },[nickname])
+    },[])
 
 
     // RECEIVE MSG FROM SERVER
