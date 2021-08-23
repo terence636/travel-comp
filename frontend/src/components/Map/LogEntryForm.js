@@ -35,16 +35,12 @@ const LogEntryForm = ({ location, onClose }) => {
     <div className="popup">
     <form onSubmit={handleSubmit(onSubmit)} className="entry-form">
       { error ? <h3 className="error">{error}</h3> : null}
-      {/* <label htmlFor="apiKey">API KEY</label>
-      <input type="password" name="apiKey" required  /> */}
       <label htmlFor="title">Title</label>
       <input name="title" {...register("title", {required:true })} required/>
       <label htmlFor="comments">Comments</label>
       <textarea name="comments" {...register("comments", {required:true })} rows={3} required></textarea>
       <label htmlFor="description">Description</label>
       <textarea name="description" {...register("description", {required:true })} rows={3} required></textarea>
-      {/* <label htmlFor="image">Image</label>
-      <input name="image"  /> */}
       <label htmlFor="visitDate">Visit Date</label>
       <input name="visitDate" type="date" {...register("visitDate", {required:true })} required />
       <button disabled={loading}>{loading ? 'Loading...' : 'Create Entry'}</button>

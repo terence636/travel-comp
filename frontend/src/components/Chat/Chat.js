@@ -13,17 +13,12 @@ const Chat = ({nickname, room}) => {
     const [msgs, setMsgs] = useState([])
 
     useEffect(()=> {
-            // console.log(nickname)
             socket = io('/', {
             withCredentials: true,
             extraHeaders: {
               "my-custom-header": "abcd"
         }})
         socket.emit('join', { nickname, room }, ()=>{})
-
-        // check is it existing room
-        // if not create room
-        // if yes, get all messages from the room
         
         return () => {
             socket.emit('disconnectUser')
@@ -31,7 +26,6 @@ const Chat = ({nickname, room}) => {
             socket.off()
         }
 
-    // },[nickname])
     },[])
 
 
@@ -39,7 +33,6 @@ const Chat = ({nickname, room}) => {
    useEffect(()=>{
         socket.on('message',(newMsg)=>{
         setMsgs(prev=>[...prev,newMsg])
-        // update DB with newMsg
     })
    },[])
 
@@ -50,7 +43,6 @@ const Chat = ({nickname, room}) => {
             setMsg('')
             })
         }
-        // update DB with newMsg
    },[msg])
 
    // SET MSG STATE TO SEND OUT
@@ -59,7 +51,6 @@ const Chat = ({nickname, room}) => {
        setMsg(msgToSend)
    }
 
-//    console.log({msg},{msgs})
     return (
          <div className="chatContainer"> 
                 <InfoBar room={room} nickname={nickname} />

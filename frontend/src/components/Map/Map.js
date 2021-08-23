@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import GoogleMapReact from "google-map-react";
-import { Paper, Typography, useMediaQuery } from "@material-ui/core";
+import { Paper, Typography } from "@material-ui/core";
 import LocationOnSharpIcon from '@material-ui/icons/LocationOnSharp';
 import AddLocationSharpIcon from "@material-ui/icons/AddLocationSharp";
 import LogEntryForm from './LogEntryForm'
@@ -9,7 +9,7 @@ import { deleteLogEntry } from '../../api/LogEntriesApi';
 import useStyles from "./styles";
 import { Box } from "@material-ui/core"
 import { Context } from "../../Main.js";
-const isIcon = true;
+const isIcon = false;
 
 const Map = ({ coordinates, setCoordinates, setBounds, places, setChildClicked, weatherData, logCheckBox }) => {
   const classes = useStyles();
@@ -139,13 +139,6 @@ const Map = ({ coordinates, setCoordinates, setBounds, places, setChildClicked, 
             {
               isIcon ? (
                 <>
-                {/* <Typography
-                className={classes.typography}
-                variant="subtitle2"
-                gutterBottom
-                >
-                  {place.name}
-                </Typography> */}
                 <LocationOnSharpIcon style={{cursor:'pointer'}} color="action" fontSize="large" />
                 </>
               ) : (
@@ -157,22 +150,22 @@ const Map = ({ coordinates, setCoordinates, setBounds, places, setChildClicked, 
                   >
                     {place.name}
                   </Typography>
-                  {/* <img
+                  <img
                     className={classes.pointer}
                     src={place.photo
                       ? place.photo.images.large.url
                       : "https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg"
                     }
                     alt={place.name}  
-                  />
-                <Rating
+                  /> 
+                {/* <Rating
                   name="read-only"
                   size="small"
                   value={Number(place.rating)}
                   readOnly
-                /> */}
+                // /> */}
                 </Paper>
-              )
+             )
             } 
           </Box>
       ))}

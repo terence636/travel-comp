@@ -4,12 +4,8 @@ const Logs = require("../models/logEntry.model.js");
 router.route("/:username")
 .get(async (req, res, next) => {
     try {
-        console.log("here")
       const logs = await Logs.find({username: req.params.username});
-      console.log({logs})
       res.status(200).json(logs);
-    //   console.log({logs})
-    //   res.send("ok")
     } catch (err) {
         console.log(err)
       res.status(400).json(err);
@@ -29,7 +25,6 @@ router.route("/")
     }
   })
 .post(async (req, res, next) => {
-    // console.log(req.body)
     try {
       const logEntry = new Logs(req.body);
       const createdEntry = await logEntry.save();
@@ -37,10 +32,6 @@ router.route("/")
     } catch (error) {
         console.log(err)
         res.status(400).json(err)
-    //   if (error.name === 'ValidationError') {
-    //     res.status(422);
-    //   }
-    //   next(error);
     }
   })
   

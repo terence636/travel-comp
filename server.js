@@ -7,14 +7,11 @@ const session = require("express-session");
 const methodOverride = require("method-override");
 const cors = require("cors");
 const httpServer = http.createServer(app);
-// const { Server } = require("socket.io");
-// const io = new Server(httpServer);
 
 const io = require("socket.io")(httpServer, {
   cors: {
     origin: "http://localhost:3000",
     methods: ["GET", "POST"],
-    // allowedHeaders: ["my-custom-header"],
     credentials: true
   }
 });
@@ -45,15 +42,10 @@ app.use("/sessions", sessionsRoutes)
 const logEntryRoutes = require("./routes/logEntry.js")
 app.use("/logs", logEntryRoutes)
 
-// app.get("/", (req, res) => {
-//   res.sendFile(__dirname + "/index.html");
-// });
-
 io.on("connection", (socket) => {
 
   console.log(`${socket.id} A user is connected`)
   socket.on("disconnectUser", () => {
-    // const user = getUser(socket.id)
     console.log(`${socket.id} had left!!`);
     const user = removeUser(socket.id)
     io.to(user.room).emit('message',{ user: 'ADMIN', text: `${user.nickname.toUpperCase()} has left`})
@@ -68,12 +60,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("join",({nickname, room } , callback)=>{
-    // console.log(socket.id)
     const { error, user } = addUser({id:socket.id, nickname, room})
-    console.log({error})
-    console.log({user})
-    console.log("Allusers",getUsersInRoom(user?.room))
-    // if(error) return callback(error)
     console.log(`${user.nickname} has join the chat`)
     socket.emit('message', { user: 'ADMIN', text: `${user?.nickname.toUpperCase()}, Welcome to ${user?.room.toUpperCase()}`})
     socket.broadcast.to(user.room).emit('message', {user: 'ADMIN', text: `${user?.nickname.toUpperCase()}, has joined!`})
@@ -86,9 +73,6 @@ httpServer.listen(process.env.PORT || 4000, () => {
   console.log("Chat Server Listening on the port", process.env.PORT);
 });
 
-// app.listen(4000, () => {
-//   console.log("Listening on the port", 4000);
-// });
 
 // httpServer.listen(3000, () => {
 //   console.log('listening on *:3000');

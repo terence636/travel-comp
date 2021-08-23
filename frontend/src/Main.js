@@ -22,7 +22,6 @@ const Main = () => {
     return (
         <div>
         <Context.Provider value={contextValue}>
-        
             <Switch>
               <Route exact path ="/"><Redirect to="/login" /></Route>
               <PrivateRoute path="/main" component={App} />
